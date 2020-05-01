@@ -6,10 +6,12 @@
     enabled: true
     gpgcheck: true
     repo_gpgcheck: true
-    baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-{{ kubernetes_yum_arch }}
-    gpgkey:
-      - https://packages.cloud.google.com/yum/doc/yum-key.gpg
-      - https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+    #baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-{{ kubernetes_yum_arch }}
+    baseurl: https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-{{ kubernetes_yum_arch }}
+    gpgkey: https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
+      - https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
+      #- https://packages.cloud.google.com/yum/doc/yum-key.gpg
+      #- https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 
 - name: Add Kubernetes GPG keys.
   rpm_key:
@@ -17,8 +19,10 @@
     state: present
   register: kubernetes_rpm_key
   with_items:
-    - https://packages.cloud.google.com/yum/doc/yum-key.gpg
-    - https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+      - https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg
+      - https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
+    #- https://packages.cloud.google.com/yum/doc/yum-key.gpg
+    #- https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 
 - name: Make cache if Kubernetes GPG key changed.
   command: "yum -q makecache -y --disablerepo='*' --enablerepo='kubernetes'"

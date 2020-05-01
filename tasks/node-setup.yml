@@ -1,4 +1,8 @@
 ---
+# for old k8s version , may not support image-repository paramter when kubeadm init. so need pull image in advance
+#- name:  pull k8s-node images
+#  script: k8s_node_images.sh
+
 - name: Join node to Kubernetes master
   shell: >
     {{ kubernetes_join_command }}
